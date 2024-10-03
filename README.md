@@ -1,5 +1,6 @@
 <div style="text-align: justify;">
 
+### Work in progress
 # Notas del paper "Local Binary Convolutional Neural Networks":
 
 ## Índice
