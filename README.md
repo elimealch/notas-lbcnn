@@ -31,17 +31,17 @@ Además, la naturaleza dispersa y binaria de los pesos también permite ahorrar 
 
 
 ## Forming _LBP_ with Convolutional Filters
-**Funcionamiento de los _LBP_'s:** El operador de _LBP_ tradicional opera en _patches_ de un tamaño de _3x3_, _5x5_, etc. para escanear toda la imagen de forma solapada. El descriptor _LBP_ es formado comparando secuencialmente la intensidad de los píxeles vecinos con la del píxel central (_pivote_) del _patch_, donde los píxeles con una intensidad mayor a la del píxel central se establecen a _1_ mientras que los de menor intensidad son establecidos a _0_. Finalmente, esta _cadena de bits_ es leída y mapeada a un número decimal (usando base _2_) como el valor de característica asignado al píxel central. Estos valores de características agregados  caracterizan la textura local en la imagen. El _LBP_ para el píxel central ($x_c, y_c$) dentro del _kernel_ puede ser representado como:
+**Funcionamiento de los _LBP_'s:** El operador de _LBP_ tradicional opera en _patches_ de un tamaño de _3x3_, _5x5_, etc. para escanear toda la imagen de forma solapada. El descriptor _LBP_ es formado comparando secuencialmente la intensidad de los píxeles vecinos con la del píxel central (_pivote_) del _patch_, donde los píxeles con una intensidad mayor a la del píxel central se establecen a _1_ mientras que los de menor intensidad son establecidos a _0_. Finalmente, esta _cadena de bits_ es leída y mapeada a un número decimal (usando base _2_) como el valor de característica asignado al píxel central. Estos valores de características agregados  caracterizan la textura local en la imagen. El _LBP_ para el píxel central (\(x_c, y_c\)) dentro del _kernel_ puede ser representado como:
 <!-- <div style="text-align: center"> -->
 
-$$\displaystyle LBP(x_c, y_c) = \sum_{n = 0}^{L - 1}{s(i_n, i_c)} * 2^n$$
+\[\displaystyle LBP(x_c, y_c) = \sum_{n = 0}^{L - 1}{s(i_n, i_c)} * 2^n\]
 
 **Donde:**
-- $i_n$ denota la intensidad del $n^{th}$ píxel vecino.
-- $i_c$ denota la intensidad del píxel central.
-- $L$ es el largo de la secuencia de bits (el patrón).
+- \(i_n\) denota la intensidad del \(n^{th}$ píxel vecino.
+- \(i_c\) denota la intensidad del píxel central.
+- \(L$\) es el largo de la secuencia de bits (el patrón).
 -
-  $
+  \(
   s(i_n, i_c) =
   \begin{cases}
   1 & \text{si } i_n \ge i_c\\
@@ -51,11 +51,11 @@ $$\displaystyle LBP(x_c, y_c) = \sum_{n = 0}^{L - 1}{s(i_n, i_c)} * 2^n$$
 
 <!-- </div> -->
 
-Por ejemplo, un _patch_ con un tamaño de $N \times N$ consiste de una _cadena de bits_ de $N^2 - 1$ bits de largo porque ese es el número de píxeles vecinos.
+Por ejemplo, un _patch_ con un tamaño de \(N \times N$ consiste de una _cadena de bits_ de \(N^2 - 1$ bits de largo porque ese es el número de píxeles vecinos.
 
 **Características de los _LBP_'s:**
 - **Base:** La base _2_ es comúnmente usada para codificar el descriptor _LBP_, por lo tanto, las ponderaciones para codificar la _cadena de bits_ del _LBP_ están restringidas a potencias de _2_. Relajar estas restricciones y permitir a los pesos tomar cualquier valor real puede potencialmente generalizar el descriptor _LBP_.
-- **Pivote:** El centro del _patch_ es típicamente elegido como el _pivote_ para comparar las intensidades de los píxeles en el _kernel_. Escoger diferentes ubicaciones en el _kernel_ como el _pivote_ puede permitir al _LBP_ codificar diferentes patrones locales de texturas. Además, la función comparativa $s(i_n, i_c)$ puede ser una función de múltiples pivotes resultando en una codificación más precisa de la textura local.
+- **Pivote:** El centro del _patch_ es típicamente elegido como el _pivote_ para comparar las intensidades de los píxeles en el _kernel_. Escoger diferentes ubicaciones en el _kernel_ como el _pivote_ puede permitir al _LBP_ codificar diferentes patrones locales de texturas. Además, la función comparativa \(s(i_n, i_c)$ puede ser una función de múltiples pivotes resultando en una codificación más precisa de la textura local.
 - **Orden:** _LBP_ codifica la textura local de un _kernel_ eligiendo un orden específico de píxeles para preservar parcialmente la información espacial del _kernel_. Para un _patch_ de tamaño y _pivote_ fijo, diferentes elecciones del orden de las vecindades resultan en diferente codificación de la textura local.
 
 _Las variantes mencionadas anteriormente son elegidas empíricamente y dependen de la aplicación. Ser capaz de generalizar estos factores de variaciones en un framework aprendible es una de las motivaciones e inspiraciones detras del diseño de LBCNN._
@@ -94,7 +94,7 @@ Por lo tanto, cada capa _LBC_ consiste de _dos_ capas convolucionales, donde los
 
 El número de parámetros aprendibles en la capa _LBC_ (con las convoluciones _1 x 1_) son significativamente más pequeños que aquellos de las capas convolucionales estándar por el mismo tamaño del filtro convolucional y número de canales de entrada y salida. Sea $p$ y $q$, el número de canales de entrada y salida respectivamente, y un filtro convolucional de tamaño $h \times w$, una capa convolucional estándar consiste de $p \cdot h \cdot w \cdot q$ parametros aprendibles, mientras que el correspondiente con una capa _LBC_ consiste de $p \cdot h \cdot w \cdot m$ pesos fijos y $m \cdot q$ parametros aprendibles (correspondiente a la convolucion _1 x 1_), donde $m$ es el número de canales intermedios de la capa _LBC_ el cual, escencialmente es el número de filtros _LBC_ fijos. Las convoluciones _1 x 1_ actúan en los $m$ mapas de activación de los filtros fijos para generar el $q$ canal de salida. El ratio del número de parámetros en una CNN y _LBC_ es:
 
-$$\frac{\text{# param. in CNN}}{\text{# param. in LBCNN}} = \frac{p \cdot h \cdot w \cdot q}{m \cdot q} = \frac{p \cdot h \cdot w}{m}$$
+\[\frac{\text{# param. in CNN}}{\text{# param. in LBCNN}} = \frac{p \cdot h \cdot w \cdot q}{m \cdot q} = \frac{p \cdot h \cdot w}{m}\]
 
 Para simplicidad, asumiendo $p = m$ reduce el ratio a $h \cdot w$.
 
