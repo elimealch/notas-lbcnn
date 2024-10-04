@@ -40,15 +40,14 @@ $$\displaystyle LBP(x_c, y_c) = \sum_{n = 0}^{L - 1}{s(i_n, i_c)} * 2^n$$
 - $i_n$ denota la intensidad del $n^{th}$ píxel vecino.
 - $i_c$ denota la intensidad del píxel central.
 - $L$ es el largo de la secuencia de bits (el patrón).
--
-  $
+- ```math
   s(i_n, i_c) =
   \begin{cases}
   1 & \text{si } i_n \ge i_c\\
   0 & \text{de otra forma}
   \end{cases}
   $
-
+```
 <!-- </div> -->
 
 Por ejemplo, un _patch_ con un tamaño de $N \times N$ consiste de una _cadena de bits_ de $N^2 - 1$ bits de largo porque ese es el número de píxeles vecinos.
@@ -65,8 +64,8 @@ _Las variantes mencionadas anteriormente son elegidas empíricamente y dependen 
 $$\displaystyle \mathbf{y} = \sum_{i = 1}^8 \sigma(\mathbf{b}_i*\mathbf{x})\cdot \mathbf{v}_i$$
 
 **Donde:**
-- $\bm{x} \in \mathbb{R}^d$ es la versión vectorizada de la imagen original.
-- $\boldsymbol{b}_i$ son los filtros convolucionales dispersos.
+- $\mathbf{x} \in \mathbb{R}^d$ es la versión vectorizada de la imagen original.
+- ${\bf b}_i$ son los filtros convolucionales dispersos.
 - $\sigma$ es la función Heaviside de escalón unitario.
 - $\mathbf{y} \in \Bbb{R}^d$ es la imagen _LBP_ resultante.
 <!-- - $y \in \Bbb{R}^d$ es la imagen con los patrones de texturas locales resultante. -->
@@ -80,7 +79,7 @@ Cambiando apropiadamente los pesos de $\mathbf{v}$; la base y el orden de condif
 
 ## LBCNN
 ### Local Binary Convolution Module
-Como se muestra en la [figura 3](#fig3), el módulo básico de _LBCNN_ consiste de $m$ filtros convolucionales predefinidos (anchors weights) $\mathbf{b}_i, i \in [m]$. La imagen de entrada $\mathbf{x}_l$ es filtrada por estos _LBC_ filtros para generar $m$ mapas de diferencias que son pasados sobre la función de escalon unitario _Heaviside_ ($\sigma$) resultando en $m$ mapas de bits. Para permitir hacer _back propagation_ sobre la capa _LBC_, se relmplaza la función no diferenciable _Heaviside_ en el _LBP_ por una función de activación diferenciable ($sigmoid$ o $ReLU$). Finalmente, los $m$ mapas de bits son linealmente combinados por $m$ con $m$ pesos aprendibles $\cal{V}_{l, i},i \in [m]$ para generar un canal de la respuesta final de la capa _LBC_. El mapa de características de la capa _LBC_ sirve como la entrada $\mathbf{x}_{l+1}$ para la siguiente capa. Las respuestas de la capa _LBC_ para un _multi-canal_ de entrada generalizado $\mathbf{x}_l$ puede ser expresado como:
+Como se muestra en la [figura 3](#fig3), el módulo básico de _LBCNN_ consiste de $m$ filtros convolucionales predefinidos (anchors weights) ${\bf b}_i, i \in \[m\]$. La imagen de entrada $\mathbf{x}_l$ es filtrada por estos _LBC_ filtros para generar $m$ mapas de diferencias que son pasados sobre la función de escalon unitario _Heaviside_ ($\sigma$) resultando en $m$ mapas de bits. Para permitir hacer _back propagation_ sobre la capa _LBC_, se relmplaza la función no diferenciable _Heaviside_ en el _LBP_ por una función de activación diferenciable ($sigmoid$ o $ReLU$). Finalmente, los $m$ mapas de bits son linealmente combinados por $m$ con $m$ pesos aprendibles $\cal{V}_{l, i},i \in [m]$ para generar un canal de la respuesta final de la capa _LBC_. El mapa de características de la capa _LBC_ sirve como la entrada $\mathbf{x}_{l+1}$ para la siguiente capa. Las respuestas de la capa _LBC_ para un _multi-canal_ de entrada generalizado $\mathbf{x}_l$ puede ser expresado como:
 
 $$\displaystyle \mathbf{x}_{l + 1}^t = \sum_{i = 1}^m \sigma(\sum_s \mathbf{b}_i^{st} * \mathbf{x}_l^s)\cdot \cal{V}_{l,i}^t \text{ (1)}$$
 
