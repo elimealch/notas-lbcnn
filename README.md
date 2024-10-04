@@ -31,7 +31,7 @@ Además, la naturaleza dispersa y binaria de los pesos también permite ahorrar 
 
 
 ## Forming _LBP_ with Convolutional Filters
-**Funcionamiento de los _LBP_'s:** El operador de _LBP_ tradicional opera en _patches_ de un tamaño de _3x3_, _5x5_, etc. para escanear toda la imagen de forma solapada. El descriptor _LBP_ es formado comparando secuencialmente la intensidad de los píxeles vecinos con la del píxel central (_pivote_) del _patch_, donde los píxeles con una intensidad mayor a la del píxel central se establecen a _1_ mientras que los de menor intensidad son establecidos a _0_. Finalmente, esta _cadena de bits_ es leída y mapeada a un número decimal (usando base _2_) como el valor de característica asignado al píxel central. Estos valores de características agregados  caracterizan la textura local en la imagen. El _LBP_ para el píxel central (\(x_c, y_c\)) dentro del _kernel_ puede ser representado como:
+**Funcionamiento de los _LBP_'s:** El operador de _LBP_ tradicional opera en _patches_ de un tamaño de _3x3_, _5x5_, etc. para escanear toda la imagen de forma solapada. El descriptor _LBP_ es formado comparando secuencialmente la intensidad de los píxeles vecinos con la del píxel central (_pivote_) del _patch_, donde los píxeles con una intensidad mayor a la del píxel central se establecen a _1_ mientras que los de menor intensidad son establecidos a _0_. Finalmente, esta _cadena de bits_ es leída y mapeada a un número decimal (usando base _2_) como el valor de característica asignado al píxel central. Estos valores de características agregados  caracterizan la textura local en la imagen. El _LBP_ para el píxel central $(x_c, y_c)$ dentro del _kernel_ puede ser representado como:
 <!-- <div style="text-align: center"> -->
 
 $$\displaystyle LBP(x_c, y_c) = \sum_{n = 0}^{L - 1}{s(i_n, i_c)} * 2^n$$
@@ -65,8 +65,8 @@ _Las variantes mencionadas anteriormente son elegidas empíricamente y dependen 
 $$\displaystyle \mathbf{y} = \sum_{i = 1}^8 \sigma(\mathbf{b}_i*\mathbf{x})\cdot \mathbf{v}_i$$
 
 **Donde:**
-- $\mathbf{x} \in \Bbb{R}^d$ es la versión vectorizada de la imagen original.
-- $\mathbf{b}_i$ son los filtros convolucionales dispersos.
+- $\bm{x} \in \mathbb{R}^d$ es la versión vectorizada de la imagen original.
+- $\boldsymbol{b}_i$ son los filtros convolucionales dispersos.
 - $\sigma$ es la función Heaviside de escalón unitario.
 - $\mathbf{y} \in \Bbb{R}^d$ es la imagen _LBP_ resultante.
 <!-- - $y \in \Bbb{R}^d$ es la imagen con los patrones de texturas locales resultante. -->
