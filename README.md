@@ -40,14 +40,15 @@ $$\displaystyle LBP(x_c, y_c) = \sum_{n = 0}^{L - 1}{s(i_n, i_c)} * 2^n$$
 - $i_n$ denota la intensidad del $n^{th}$ píxel vecino.
 - $i_c$ denota la intensidad del píxel central.
 - $L$ es el largo de la secuencia de bits (el patrón).
-- ```math
+-
+```math
   s(i_n, i_c) =
   \begin{cases}
   1 & \text{si } i_n \ge i_c\\
   0 & \text{de otra forma}
   \end{cases}
-  $
 ```
+
 <!-- </div> -->
 
 Por ejemplo, un _patch_ con un tamaño de $N \times N$ consiste de una _cadena de bits_ de $N^2 - 1$ bits de largo porque ese es el número de píxeles vecinos.
