@@ -60,9 +60,9 @@ Por ejemplo, un _patch_ con un tamaño de $N \times N$ consiste de una _cadena d
 
 _Las variantes mencionadas anteriormente son elegidas empíricamente y dependen de la aplicación. Ser capaz de generalizar estos factores de variaciones en un framework aprendible es una de las motivaciones e inspiraciones detras del diseño de LBCNN._
 
-**Reformulando los _LBP_'s con filtros convolucionales (creación de la _LBC_):** Usando _ocho_ filtros convolucionales dispersos (en una sóla convolución de toda la imagen) con un tamaño de $3 \times 3$ se obtiene el mismo resultado ([ver figura 2](#fig2)) de una forma más eficiente. Cada filtro convolucional es un filtro de dispersidad 2 para calcular la diferencia de 2 elementos. Las formulaciones estándar del _LBP_ son simplemente sumas ponderadas de todos los bits usando un vector de pesos predefinido $\mathbf{v} = [2^7, 2^6, 2^5, 2^4, 2^3, 2^2, 2^1, 2^0]$, por lo tanto, los _LBP_ standard pueden ser reformulados como:
+**Reformulando los _LBP_'s con filtros convolucionales (creación de la _LBC_):** Usando _ocho_ filtros convolucionales dispersos (en una sóla convolución de toda la imagen) con un tamaño de $3 \times 3$ se obtiene el mismo resultado ([ver figura 2](#fig2)) de una forma más eficiente. Cada filtro convolucional es un filtro de dispersidad 2 para calcular la diferencia de 2 elementos. Las formulaciones estándar del _LBP_ son simplemente sumas ponderadas de todos los bits usando un vector de pesos predefinido $v\mathbf{v} = [2^7, 2^6, 2^5, 2^4, 2^3, 2^2, 2^1, 2^0]$, por lo tanto, los _LBP_ standard pueden ser reformulados como:
 
-$$\displaystyle{\mathbf{y} = \sum_{i = 1}^8 \sigma(\mathbf{b}_i*\mathbf{x})\cdot \mathbf{v}_i}$$
+$$\displaystyle{y\mathbf{y} = \sum_{i = 1}^8 \sigma(\mathbf{b}_i*\mathbf{x})\cdot \mathbf{v}_i}$$
 
 **Donde:**
 - $\mathbf{x} \in \mathbb{R}^d$ es la versión vectorizada de la imagen original.
@@ -77,6 +77,18 @@ Cambiando apropiadamente los pesos de $\mathbf{v}$; la base y el orden de condif
 <div id="fig2" style="text-align: center;">
   <img src="./assets/figures/fig2.png" alt="Figure 2" width="400">
 </div>
+
+------------- TESTING ----------------
+
+$\mathbf{x} \in \mathbb{R}^d$
+
+$$\mathbf{x} \in \mathbb{R}^d$$
+
+$\bm{x} \in \mathbb{R}^d$
+
+$$\bm{x} \in \mathbb{R}^d$$
+
+------------- TESTING ----------------
 
 ## LBCNN
 ### Local Binary Convolution Module
