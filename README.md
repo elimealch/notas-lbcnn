@@ -40,7 +40,7 @@ $$\displaystyle LBP(x_c, y_c) = \sum_{n = 0}^{L - 1}{s(i_n, i_c)} * 2^n$$
 - $i_n$ denota la intensidad del $n^{th}$ píxel vecino.
 - $i_c$ denota la intensidad del píxel central.
 - $L$ es el largo de la secuencia de bits (el patrón).
-- $s(i_n, i_c) = \begin{cases} 1 & \text{si } i_n \ge i_c\\ 0 & \text{de otra forma} \end{cases}
+- $s(i_n, i_c) = \begin{cases} 1 & \text{si } i_n \ge i_c\\ 0 & \text{de otra forma} \end{cases}$
 
 <!-- </div> -->
 
